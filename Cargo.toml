@@ -12,3 +12,4 @@ categories = ["game-engines"]
 [dependencies]
 bevy = { version = "^0.13.0", default-features = false }
 msgbox = "0.7.0"
+native-dialog = "0.7.0"

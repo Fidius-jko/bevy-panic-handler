@@ -113,7 +113,14 @@ impl Plugin for PanicHandler {
                 not(test),
                 any(target_os = "windows", target_os = "macos", target_os = "linux")
             ))]
-            {
+            {   
+                use native_dialog::{MessageDialog, MessageType};
+                let _ = MessageDialog::new()
+                .set_type(MessageType::Info)
+                .set_title(&title_string)
+                .set_text(&info_string)
+                .show_confirm()
+                .unwrap();
                 _ = msgbox::create(&title_string, &info_string, msgbox::IconType::Error);
             }
 
