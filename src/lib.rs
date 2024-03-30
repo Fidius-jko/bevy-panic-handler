@@ -109,19 +109,15 @@ impl Plugin for PanicHandler {
             bevy::log::error!("{title_string}\n{info_string}");
 
             // Don't interrupt test execution with a popup, and dont try on unsupported platforms.
-            #[cfg(all(
-                not(test),
-                any(target_os = "windows", target_os = "macos", target_os = "linux")
-            ))]
+            #[cfg(all(not(test), any(target_os = "windows", target_os = "macos", target_os = "linux")))]
             {   
                 use native_dialog::{MessageDialog, MessageType};
                 let _ = MessageDialog::new()
-                .set_type(MessageType::Info)
+                .set_type(MessageType::Error)
                 .set_title(&title_string)
                 .set_text(&info_string)
-                .show_confirm()
+                .show_alert()
                 .unwrap();
-                _ = msgbox::create(&title_string, &info_string, msgbox::IconType::Error);
             }
 
             (handler.custom_hook)(info);
